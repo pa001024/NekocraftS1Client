@@ -15,13 +15,15 @@ set login=
 :init
 set APPDATA=%cd%
 set path=%path%;%javapath%
-set javaname=javaw.exe
+set javaname=javaw
 call :readconf
 call :banner
-SET /P name=^>^>
-IF /I '%name%'=='mem' call :setms & call :setmx & goto init ELSE IF /I '%name%'=='pwd' call :setpwd ELSE IF /I '%name%'=='' set name=%lastname% ELSE IF /I '%name%'=='.' set javaname=java.exe
+SET /P tmpname=^>^>
+IF /I '%tmpname%'=='mem' call :setms & call :setmx & call :saveconf & goto init 
+IF /I '%tmpname%'=='pwd' call :setpwd & call :saveconf
+IF /I '%tmpname%'=='.' set javaname=java
 IF /I '%name%'=='' goto init
-IF /I '%pwd%'=='' call :setpwd
+set name=%tmpname%
 call :saveconf
 call :rungame
 exit
