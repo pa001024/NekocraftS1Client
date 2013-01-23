@@ -1,6 +1,0 @@
-ZH_Input_1.4.4.zip
-Font_HKSN_U.zip
-ModLoader_1.4.5.zip
-liteloader_1.4.5.zip
-OptiFine_1.4.5_HD_U_D3.zip
-MySkinConfig_1.4.4.zip
