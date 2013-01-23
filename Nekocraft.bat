@@ -8,7 +8,8 @@ set modl=_normal.txt
 :这是JAVA安装路径 如不能运行请下载JAVA (JRE) 并手动设置路径
 set javapath=C:\Program Files\Java\jre7\bin;C:\Program Files (x86)\Java\jre7\bin;C:\Program Files (x86)\Java\jre7\bin;C:\Program Files\Java\jre1.7.0\bin;C:\Program Files\Java\jre6\bin
 
-set login=cscript nauth.js
+set login=
+:cscript nauth.js
 :cscript ml.vbs %name% %pwd%
 
 :init
@@ -29,14 +30,14 @@ exit
 cd .\.minecraft\bin
 
 :登录
-IF /I '%login%'=='' start %login%
+IF /I '%login%' NEQ '' start %login%
 
 :载入MOD
 for /f "tokens=1,2" %%a in (.\injarmods\%modl%) do (
 call :c %%a
 )
 :启动游戏
-start cscript hrun.js javaw -cp "MagicLauncher.jar" -Xms%min%m -Xmx%max%m -Xincgc -Dsun.java2d.noddraw=true -Dsun.java2d.pmoffscreen=false -Dsun.java2d.d3d=false -Dsun.java2d.opengl=false -Djava.library.path=".\natives" magic.launcher.Launcher -lcp="%mods%;%jar%;jinput.jar;lwjgl.jar;lwjgl_util.jar" "%name%" -
+cscript hrun.wsh.js javaw -cp MagicLauncher.jar -Xms%min%m -Xmx%max%m -Xincgc -Dsun.java2d.noddraw=true -Dsun.java2d.pmoffscreen=false -Dsun.java2d.d3d=false -Dsun.java2d.opengl=false -Djava.library.path=".\natives" magic.launcher.Launcher -lcp="%mods%;%jar%;jinput.jar;lwjgl.jar;lwjgl_util.jar" "%name%" -
 cd ..\..
 cls 
 echo =======   Here   ========
@@ -49,6 +50,8 @@ echo .
 ping 127.0.0.1 -n 2 >nul 2>nul
 echo .
 ping 127.0.0.1 -n 2 >nul 2>nul
+
+exit
 goto e
 
 
