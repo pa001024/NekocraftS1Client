@@ -1,0 +1,25 @@
+/NVIDIA
+/Media Cache
+/otherversion
+/.minecraft/stats
+/.minecraft/texturepacks-mp-cache
+/.minecraft/resources
+/.minecraft/saves
+/.minecraft/lib
+/.minecraft/magic
+/.minecraft/mods/World*
+/.minecraft/config
+/.minecraft/LiteLoader.*
+/.minecraft/ModLoader.*
+/.minecraft/crash-reports
+/.minecraft/lastlogin
+/.minecraft/ModLoader.*
+/.minecraft/LiteLoader.*
+/.minecraft/mods/macros
+/.minecraft/journeyMap
+*.1
+*.log
+*.lck
+glslshadersof.updatecheck.txt
+Launcher.ini
+/pack.bat
