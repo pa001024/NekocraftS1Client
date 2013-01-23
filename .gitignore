@@ -5,10 +5,10 @@
 /.minecraft/texturepacks-mp-cache
 /.minecraft/resources
 /.minecraft/saves
-/.minecraft/lib
+#/.minecraft/lib
 /.minecraft/magic
 /.minecraft/mods/World*
-/.minecraft/config
+#/.minecraft/config
 /.minecraft/LiteLoader.*
 /.minecraft/ModLoader.*
 /.minecraft/crash-reports
@@ -20,6 +20,8 @@
 *.1
 *.log
 *.lck
+*.7z
+*.zip
 glslshadersof.updatecheck.txt
 Launcher.ini
 /pack.bat

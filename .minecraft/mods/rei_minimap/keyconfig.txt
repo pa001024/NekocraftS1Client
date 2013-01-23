@@ -1,14 +1,14 @@
-主菜单热键: M
-开关小地图: None
-切换雷达类型: None
-调整缩放大小: Z
-开关大地图: X
-开关大地图标识: None
-开关标识可见: None
-开关标识名称: None
-调整标识维度: None
-开关实体雷达: None
-添加标识: C
-打开标识列表: None
-放大地图: None
-缩小地图: None
+Menu Key: M
+Toggle Enable: None
+Toggle Render Type: None
+Toggle Zoom: Z
+Toggle Large Map: X
+Toggle Large Map Label: None
+Toggle Waypoints Visible: None
+Toggle Waypoints Marker: None
+Toggle Waypoints Dimension: None
+Toggle Entities Radar: None
+Set Waypoint: C
+Waypoint List: None
+Zoom In: None
+Zoom Out: None
