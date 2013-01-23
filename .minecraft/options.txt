@@ -32,6 +32,9 @@ advancedItemTooltips:false
 pauseOnLostFocus:true
 showCape:true
 touchscreen:false
+overrideWidth:0
+overrideHeight:0
+heldItemTooltips:true
 key_key.attack:-100
 key_key.use:-99
 key_key.forward:17
@@ -45,5 +48,5 @@ key_key.inventory:18
 key_key.chat:20
 key_key.playerlist:15
 key_key.pickItem:-98
+key_Zoom:29
 key_key.command:53
-key_JourneyMap:36
