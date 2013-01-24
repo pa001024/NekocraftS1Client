@@ -21,7 +21,7 @@ call :banner
 SET /P name=^>^>
 IF /I '%name%'=='mem' call :setms & call :setmx & call :rstname & call :saveconf & goto init 
 IF /I '%name%'=='pwd' call :setpwd & call :rstname & call :saveconf
-IF /I '%name%'=='.' set javaname=start java
+IF /I '%name%'=='.' set javaname=start java & call :rstname
 IF /I '%name%'=='' IF /I '%tmpname%'=='' goto init
 call :saveconf
 call :rungame
