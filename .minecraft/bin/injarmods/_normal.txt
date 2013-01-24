@@ -5,3 +5,4 @@ OptiFine_HD_U.zip
 OptiFine_HD_U_lang_ZH.zip
 ReiMinimap.zip
 ReiMinimap_lang_ZH.zip
+ZHInput.zip

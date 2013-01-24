@@ -15,15 +15,14 @@ set login=
 :init
 set APPDATA=%cd%
 set path=%path%;%javapath%
-set javaname=javaw
+set javaname=cscript hrun.wsh.js javaw
 call :readconf
 call :banner
-SET /P tmpname=^>^>
-IF /I '%tmpname%'=='mem' call :setms & call :setmx & call :saveconf & goto init 
-IF /I '%tmpname%'=='pwd' call :setpwd & call :saveconf
-IF /I '%tmpname%'=='.' set javaname=java
-IF /I '%name%'=='' goto init
-set name=%tmpname%
+SET /P name=^>^>
+IF /I '%name%'=='mem' call :setms & call :setmx & call :rstname & call :saveconf & goto init 
+IF /I '%name%'=='pwd' call :setpwd & call :rstname & call :saveconf
+IF /I '%name%'=='.' set javaname=start java
+IF /I '%name%'=='' IF /I '%tmpname%'=='' goto init
 call :saveconf
 call :rungame
 exit
@@ -39,7 +38,7 @@ for /f "tokens=1,2" %%a in (.\injarmods\%modl%) do (
 call :c %%a
 )
 :Æô¶¯ÓÎÏ·
-cscript hrun.wsh.js javaw -cp MagicLauncher.jar -Xms%min%m -Xmx%max%m -Xincgc -Dsun.java2d.noddraw=true -Dsun.java2d.pmoffscreen=false -Dsun.java2d.d3d=false -Dsun.java2d.opengl=false -Djava.library.path=".\natives" magic.launcher.Launcher -lcp="%mods%;%jar%;jinput.jar;lwjgl.jar;lwjgl_util.jar" "%name%" -
+%javaname% -cp MagicLauncher.jar -Xms%min%m -Xmx%max%m -Xincgc -Dsun.java2d.noddraw=true -Dsun.java2d.pmoffscreen=false -Dsun.java2d.d3d=false -Dsun.java2d.opengl=false -Djava.library.path=".\natives" magic.launcher.Launcher -lcp="%mods%;%jar%;jinput.jar;lwjgl.jar;lwjgl_util.jar" "%name%" -
 cd ..\..
 cls 
 echo =======   Here   ========
@@ -137,6 +136,9 @@ IF /I '%min%'=='' set min=512
 IF /I '%max%'=='' set max=512
 set lastname=%name%
 goto e
+
+:rstname
+set name=%lastname%
 
 :saveconf
 echo version=%version%>"%CD%\.minecraft\Launcher.ini"&echo name=%name%>>"%CD%\.minecraft\Launcher.ini"&echo min=%min%>>"%CD%\.minecraft\Launcher.ini"&echo max=%max%>>"%CD%\.minecraft\Launcher.ini"&echo pwd=%pwd%>>"%CD%\.minecraft\Launcher.ini"
