@@ -21,7 +21,7 @@
 *.log
 *.lck
 *.7z
-*.zip
+./*.zip
 forge.cfg
 forgeChunkLoading.cfg
 *.viminfo
