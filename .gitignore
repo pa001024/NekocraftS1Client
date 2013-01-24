@@ -22,6 +22,9 @@
 *.lck
 *.7z
 *.zip
+forge.cfg
+forgeChunkLoading.cfg
+*.viminfo
 glslshadersof.updatecheck.txt
 Launcher.ini
 /pack.bat
