@@ -1,0 +1,290 @@
+﻿<html>
+<head>
+<hta:application id="LiteLauncher"
+applicationname="LiteLauncher" 
+border="none"
+maximizebutton="no"
+scrollflat="yes"
+caption="no"
+innerborder="no"
+icon="favicon.ico"
+selection="yes"
+scroll="no"
+showintaskbar="yes"
+singleinstance="yes"
+sysmenu="yes"
+windowstate="normal" />
+<meta charset="utf-8" />
+<title>LiteLauncher</title>
+<style type="text/css">
+body{
+background: url(LiteLauncher.jpg);
+font:Georgia, "Times New Roman", Times, serif;
+}
+*{
+margin:0;
+padding:0;
+}
+ul,li{
+list-style:none;
+}
+.falist {
+position:absolute;
+left:119px;
+top:100px;
+}
+.falist li{
+position:absolute;
+cursor:pointer;
+height:17px;
+width:16px;
+}
+.login {
+position:absolute;
+left:332px;
+top:152px;
+}
+#submit{
+width:194px;
+height:87px;
+cursor:pointer;
+position:absolute;
+}
+#user{
+width:184px;
+height:22px;
+position:absolute;
+top:139px;
+left:4px;
+}
+#password{
+width:184px;
+height:22px;
+position:absolute;
+top:190px;
+left:4px;
+}
+#extparm{
+position:absolute;
+top:190px;
+left:-190px;
+}
+
+input{
+background:none;
+border:none;
+box-shadow: 0 0 3px #000;
+font-size:12px;
+}
+input[type="submit"]{
+opacity:0;
+filter:alpha(opacity=0);
+}
+input[type="checkbox"]{
+
+}
+.drapbar{
+position:absolute;
+left:0;
+right:0;
+top:20px;
+height:56px;
+width:100%;
+cursor:move;
+}
+
+</style>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">/*! jQuery JSON plugin 2.4.0 | code.google.com/p/jquery-json */
+(function($){'use strict';var escape=/["\\\x00-\x1f\x7f-\x9f]/g,meta={'\b':'\\b','\t':'\\t','\n':'\\n','\f':'\\f','\r':'\\r','"':'\\"','\\':'\\\\'},hasOwn=Object.prototype.hasOwnProperty;$.toJSON=typeof JSON==='object'&&JSON.stringify?JSON.stringify:function(o){if(o===null){return'null';}
+var pairs,k,name,val,type=$.type(o);if(type==='undefined'){return undefined;}
+if(type==='number'||type==='boolean'){return String(o);}
+if(type==='string'){return $.quoteString(o);}
+if(typeof o.toJSON==='function'){return $.toJSON(o.toJSON());}
+if(type==='date'){var month=o.getUTCMonth()+1,day=o.getUTCDate(),year=o.getUTCFullYear(),hours=o.getUTCHours(),minutes=o.getUTCMinutes(),seconds=o.getUTCSeconds(),milli=o.getUTCMilliseconds();if(month<10){month='0'+month;}
+if(day<10){day='0'+day;}
+if(hours<10){hours='0'+hours;}
+if(minutes<10){minutes='0'+minutes;}
+if(seconds<10){seconds='0'+seconds;}
+if(milli<100){milli='0'+milli;}
+if(milli<10){milli='0'+milli;}
+return'"'+year+'-'+month+'-'+day+'T'+
+hours+':'+minutes+':'+seconds+'.'+milli+'Z"';}
+pairs=[];if($.isArray(o)){for(k=0;k<o.length;k++){pairs.push($.toJSON(o[k])||'null');}
+return'['+pairs.join(',')+']';}
+if(typeof o==='object'){for(k in o){if(hasOwn.call(o,k)){type=typeof k;if(type==='number'){name='"'+k+'"';}else if(type==='string'){name=$.quoteString(k);}else{continue;}
+type=typeof o[k];if(type!=='function'&&type!=='undefined'){val=$.toJSON(o[k]);pairs.push(name+':'+val);}}}
+return'{'+pairs.join(',')+'}';}};$.evalJSON=typeof JSON==='object'&&JSON.parse?JSON.parse:function(str){return eval('('+str+')');};$.secureEvalJSON=typeof JSON==='object'&&JSON.parse?JSON.parse:function(str){var filtered=str.replace(/\\["\\\/bfnrtu]/g,'@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,']').replace(/(?:^|:|,)(?:\s*\[)+/g,'');if(/^[\],:{}\s]*$/.test(filtered)){return eval('('+str+')');}
+throw new SyntaxError('Error parsing JSON, source is not valid.');};$.quoteString=function(str){if(str.match(escape)){return'"'+str.replace(escape,function(a){var c=meta[a];if(typeof c==='string'){return c;}
+c=a.charCodeAt();return'\\u00'+Math.floor(c/16).toString(16)+(c%16).toString(16);})+'"';}
+return'"'+str+'"';};}(jQuery));
+</script>
+<script>
+var dragwin_cltx,dragwin_clty,dragwin_draging = false,
+config={user:"",password:"",
+mods:["MySkinConfig.zip","NekoLogin.zip","FML.zip"],
+extparm:"-Xmx728m"},
+fs= new ActiveXObject("Scripting.FileSystemObject");
+function drag_move(){
+if (dragwin_draging)
+{
+top.window.moveTo(event.screenX-dragwin_cltx,event.screenY-dragwin_clty);
+return false;
+}
+}
+
+function drag_down(){
+dragwin_cltx=event.clientX;
+dragwin_clty=event.clientY;
+dragwin_draging=true;
+event.srcElement.setCapture();
+}
+
+function drag_up(){
+dragwin_draging=false;
+event.srcElement.releaseCapture();
+}
+
+function startgame(player,sesion,extparm){
+var sh = new ActiveXObject("WScript.Shell");
+$(".falist li").each(function(index, o) {
+  var d=$(o),
+      cv={};
+  for(var i in config.mods){cv[config.mods[i]]=1;}
+    if(d.text()=="√"){
+      if(d.attr("data-type")=="jar"){
+        if(!cv[d.attr("data-name")])
+          config.mods.unshift(d.attr("data-name"));
+      } else {
+        var t=d.attr("data-type")+d.attr("data-name");
+        try{fs.MoveFile(t+".dis",t);}catch(e){}
+      }
+    } else {
+      if(d.attr("data-type")=="jar"){
+        var temp=[];
+        for(var i in config.mods){
+          if(d.attr("data-name") != config.mods[i])
+            temp.push(config.mods[i]);
+        }
+        config.mods=temp;
+      } else {
+        var t=d.attr("data-type")+d.attr("data-name");
+        try{fs.MoveFile(t,t+".dis");}catch(e){}
+      }
+    }
+});
+var jar="minecraft_147_original.jar",
+str='cmd /c .minecraft\\bin\\launcherproxy.bat '+
+extparm+
+' magic.launcher.Launcher -lcp="'+
+config.mods.join(";")+
+';'+jar+';jinput.jar;lwjgl.jar;lwjgl_util.jar" "'+
+player+'" '+sesion;
+conf();
+//* DEBUG
+    var h=fs.CreateTextFile("run.bat",1);
+    h.write(str);
+    h.close();//*/
+sh.Run(str,0,0);
+close();
+}
+function conf(){
+try {
+var fs= new ActiveXObject("Scripting.FileSystemObject"),
+h=fs.CreateTextFile("Launcher.json",1);
+var o=$.toJSON(config);
+h.write(o);
+h.close();
+}catch (e){alert(e.message)}
+}
+function login(user,pass,cb){
+try{
+var xh= new ActiveXObject("MSXML2.ServerXMLHTTP");
+xh.setOption(2, 13056);
+xh.open("POST", "https://nekocraft.com/mclogin/", 0);
+xh.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+xh.onreadystatechange=function(){
+if (xh.readyState == 4)
+{
+cb(xh.responseText);
+}
+};
+xh.send(["user="+user,
+"password="+pass
+].join("&"));
+
+}catch(e){alert("[400:登录失败:网络原因] 详细错误:"+e.message)}
+}
+$(function(){
+//showintaskbar="no" windowstate="minimize"
+var w=650,h=430,sw=screen.width,sh=screen.height,wl=(sw-w)/2,
+wt=(sh-h)/2;
+resizeTo(w,h);
+moveTo(wl,wt);
+document.oncontextmenu=function(){return false;}
+document.onselectstart=function(){return false;}
+try {
+var h=fs.OpenTextFile("Launcher.json",1,1);
+config=$.secureEvalJSON(h.ReadAll())||config;
+h.Close();
+}catch (e){}
+$("#user").val(config.user);
+$("#password").val(config.password);
+$("#extparm").val(config.extparm);
+var l=$('.falist li');
+l.each(function(i, o) {
+var d=$(o),t;
+if((t=d.attr("data-type"))!="jar")
+{
+if(fs.FileExists(t+d.attr("data-name"))){d.text("√");return;};
+}
+d.text("×");
+});
+for(var i in config.mods){
+l.filter('li[data-name="'+config.mods[i]+'"]').text("√");
+}
+$(".falist li").each(function(i, d) {
+$(d).css({top:i*29.6});
+}).click(function() {
+$(this).text($(this).text()=="×"?"√":"×");
+});
+$("#f").submit(function(){
+var user=config.user=$("#user").val(),
+password=config.password=$("#password").val();
+if(!user||!password){
+alert("请填写用户名和密码");
+return false;
+}
+login(user,password,function(d){
+if(d){
+startgame(user,d,config.extparm=$("#extparm").val());
+}else {alert("[401:登录失败:密码错误]")}
+});
+return false;
+});
+});
+</script>
+</head>
+<body>
+<div class="main">
+<div class="drapbar" onmouseup="drag_up()" onmousemove="drag_move()" onmousedown="drag_down()"></div>
+<form action="https://nekocraft.com/mclogin/" method="POST" id="f">
+<ul class="falist">
+<li data-type=".minecraft/mods/" data-name="ReiMinimapZH.zip">√</li>
+<li data-type="jar" data-name="OptiFine_HD_U.zip">√</li>
+<li data-type="jar" data-name="Font_HKSN_U.zip">√</li>
+<li data-type="jar" data-name="LiteLoader.zip">×</li>
+<li data-type="jar" data-name="ShadersMod.zip">×</li>
+<li data-type="jar" data-name="ZHInput.zip">√</li>
+<li data-type=".minecraft/coremods/" data-name="NotEnoughItemsZH.jar">×</li>
+</ul>
+<ul class="login">
+<li><input id="submit" value="" type="submit"/></li>
+<li><input id="user" name="user" type="text"/></li>
+<li><input id="password" name="pass" type="password"/></li>
+<li><input id="extparm" name="extparm" type="text"/></li>
+</ul>
+</form>
+</div>
+</body>
+</html>

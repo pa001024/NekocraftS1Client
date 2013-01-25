@@ -1,20 +1,22 @@
 ﻿Nekocraft2sX 客户端项目
 ======================
 ----------------------
-__当前版本标记:145b4__
+__当前版本标记:A3__
 
 目前进度:
 + 基本功能(原创皮肤MOD)
-+ 实现MOD加载 
++ 伪正版登陆
++ 实现可选MOD加载及其UI
 
-未来计划(原创启动器):
-+ 可定制登录协议
-+ 美观GUI实现
+未来计划:
++ 原创MOD
++ 原创插件
++ 原创服务端或更加优化的性能
 + 自动更新
 + 游戏内自定义GUI
 + Spoutcraft支持可能
 
-编译:`git archive --format=zip -9 -o nekocraftS2-pack.zip master` 
+编译:`git archive --format=zip -9 -o pack.zip master` 
 
 -----------------------------------
 

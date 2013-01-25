@@ -17,6 +17,7 @@
 /.minecraft/LiteLoader.*
 /.minecraft/mods/macros
 /.minecraft/journeyMap
+/Launcher.json
 *.1
 *.log
 *.lck
