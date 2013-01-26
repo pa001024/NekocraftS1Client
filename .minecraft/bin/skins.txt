@@ -1,2 +1,2 @@
-http://sm.skinme.co/get.php?type=skin&file=%s.png
-http://sm.skinme.co/get.php?type=cloak&file=%s.png
+http://nekocraft.com/mcskin/?p=%s
+http://nekocraft.com/mccloak/?p=%s
