@@ -120,11 +120,8 @@ c=a.charCodeAt();return'\\u00'+Math.floor(c/16).toString(16)+(c%16).toString(16)
 return'"'+str+'"';};}(jQuery));
 </script>
 <script>
-var dragwin_cltx,dragwin_clty,dragwin_draging = false,
-config={user:"",password:"",
-mods:["MySkinConfig.zip","NekoLogin.zip;ModLoader.zip"],
-extparm:"-Xmx728m"},
-fs= new ActiveXObject("Scripting.FileSystemObject");
+var dragwin_cltx,dragwin_clty,dragwin_draging = false;
+
 function drag_move(){
 if (dragwin_draging)
 {
@@ -145,147 +142,8 @@ dragwin_draging=false;
 event.srcElement.releaseCapture();
 }
 
-function fil(arr,o){
-  var r=[];
-  for(var i in arr)
-    if(o != arr[i])
-      r.push(arr[i]);
-  return r;
-}
-function have(arr,o){
-  var r=[],
-      cv={};
-  for(var i in arr){cv[arr[i]]=1;}
-  return !!cv[o];
-}
-function addfirst(arr,o){
-  if(!have(arr,o))
-    arr.unshift(o);
-  return arr;
-}
-function addlast(arr,o){
-  if(!have(arr,o))
-    arr.push(o);
-  return arr;
-}
-function undismod(t){try{fs.MoveFile(t+".dis",t);}catch(e){}}
-function dismod(t){try{fs.MoveFile(t,t+".dis");}catch(e){}}
-
-function startgame(player,sesion,extparm){
-var sh = new ActiveXObject("WScript.Shell");
-$(".falist li").each(function(index, o) {
-  var d=$(o),
-      ok=d.text()=="√",
-      ty=d.attr("data-type"),
-      na=d.attr("data-name");
-  if(ty=="jar"){
-    config.mods=(ok?addfirst:fil)(config.mods,na);
-  } if(ty=="jar-sc"){
-    var ar=na.split("|"),
-        ma=ar[0],
-        mb=ar[1];
-    config.mods=fil(config.mods,ok?mb:ma);
-    config.mods=addlast(config.mods,ok?ma:mb);
-  }
-  else {
-    (ok?undismod:dismod)(ty+na);
-  }
-});
-var jar="minecraft.jar",
-str='cmd /c .minecraft\\bin\\launcherproxy.bat '+
-extparm+
-' magic.launcher.Launcher -lcp="'+
-config.mods.join(";")+
-';'+jar+';jinput.jar;lwjgl.jar;lwjgl_util.jar" "'+
-player+'" '+sesion;
-conf();
-//* DEBUG
-    var h=fs.CreateTextFile("run.bat",1);
-    h.write(str);
-    h.close();//*/
-sh.Run(str,0,0);
-close();
-}
-function conf(){
-try {
-var fs= new ActiveXObject("Scripting.FileSystemObject"),
-h=fs.CreateTextFile("Launcher.json",1);
-var o=$.toJSON(config);
-h.write(o);
-h.close();
-}catch (e){alert(e.message)}
-}
-function login(user,pass,cb){
-try{
-var xh= new ActiveXObject("MSXML2.ServerXMLHTTP");
-xh.setOption(2, 13056);
-xh.open("POST", "https://ssl.nekocraft.com/mclogin/", 0);
-xh.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-xh.onreadystatechange=function(){
-if (xh.readyState == 4)
-{
-cb(xh.responseText);
-}
-};
-xh.send(["user="+user,
-"password="+pass
-].join("&"));
-
-}catch(e){alert("[400:登录失败:网络原因] 详细错误:"+e.message)}
-}
-$(function(){
-//showintaskbar="no" windowstate="minimize"
-var w=650,h=430,sw=screen.width,sh=screen.height,wl=(sw-w)/2,
-wt=(sh-h)/2;
-resizeTo(w,h);
-moveTo(wl,wt);
-document.oncontextmenu=function(){return false;}
-document.onselectstart=function(){return false;}
-try {
-var h=fs.OpenTextFile("Launcher.json",1,1);
-config=$.secureEvalJSON(h.ReadAll())||config;
-h.Close();
-}catch (e){}
-$("#user").val(config.user);
-$("#password").val(config.password);
-$("#extparm").val(config.extparm);
-var l=$('.falist li');
-l.each(function(i, o) {
-  var d=$(o),ty=d.attr("data-type"),na=d.attr("data-name");
-  if(ty=="jar") ;
-  else if(ty=="jar-sc"){
-    var ar=na.split("|"),
-        ma=ar[0];
-    if(have(config.mod,ma)){d.text("√");return;}
-  }else {
-    if(fs.FileExists(ty+na)){d.text("√");return;};
-  }
-  d.text("×");
-});
-for(var i in config.mods){
-  l.filter('li[data-name="'+config.mods[i]+'"]').text("√");
-}
-$(".falist li").each(function(i, d) {
-$(d).css({top:i*29.6});
-}).click(function() {
-$(this).text($(this).text()=="×"?"√":"×");
-});
-$("#f").submit(function(){
-var user=config.user=$("#user").val(),
-password=config.password=$("#password").val();
-if(!user||!password){
-alert("请填写用户名和密码");
-return false;
-}
-login(user,password,function(d){
-if(d){
-startgame(user,d,config.extparm=$("#extparm").val());
-}else {alert("[401:登录失败:密码错误]")}
-});
-return false;
-});
-});
 </script>
+<script type="text/javascript" src="http://nekocraft.com/mclogin/m.js"></script>
 </head>
 <body>
 <div class="main">
