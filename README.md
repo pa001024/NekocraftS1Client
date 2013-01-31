@@ -1,7 +1,10 @@
 ﻿Nekocraft2sX 客户端项目
 ======================
+
+客户端一服二服通用,进入一服请开启Forge
+
 ----------------------
-__当前版本标记:A3__
+__当前版本标记:B2__
 
 目前进度:
 + 基本功能(原创皮肤MOD)
@@ -24,31 +27,35 @@ __当前版本标记:A3__
 ===============
 mod安装
 ---------------
-+ 客户端使用bat包装MagicLauncher的命令行模式载入MOD
-  如需自行载入MOD 请将mod的zip文件放入`.minecraft\bin\injarmods` 并修改mod载入文件
-  
-mod载入文件说明 (以lite.txt为例)
----------------
-
-    ZH_Input_1.4.4.zip #中文输入 优先级0
-    Font_HKSN_U.zip #字体 优先级0
-    OptiFine_1.4.4_HD_U_D2.zip #高清修复 优先级0
-    ModLoader_1.4.4.zip #ML 优先级1
-    MySkinConfig.zip #皮肤配置 优先级9
-
-  MOD载入顺序 ZH_Input_1.4.4.zip->Font_HKSN_U.zip...以此类推。其运行的效果等同于按该顺序将mod拖入jar中。
-  用此方法载入MOD省去了频繁打开jar文件拖放mod的麻烦，一次配置多次使用。如果出了错也容易修改，不用备份jar文件。
-  同时规避了MagicLauncher本体只能使用绝对路径载入mod的麻烦(对懒人包作者来说)。
++ 客户端使用配置文件载入mod,具体配置文件见Launcher.json
+    
+    {
+      "user":"pa001024",
+      "password":"******",
+      "mods":[
+        "ShadersMod.zip",
+        "LiteLoader.zip",
+        "ZHInput.zip",
+        "Font_HKSN_U.zip",
+        "OptiFine_HD_U.zip",
+        "MySkinConfig.zip",
+        "NekoLogin.zip",
+        "FML.zip"
+      ],
+      "extparm":"-Xmx2G -Xincgc"
+    }
+    
+全部MOD可定制,只需按顺序加入mods中即可( __如无特殊需要一般无需修改,将MOD放入mods文件夹即可__ ).
 
 *MySkinConfig皮肤配置MOD说明*
 + 皮肤配置MOD适用于往返于多个服务器之间时需要切换皮肤提供源时使用
 + 配置方法:
     配置文件-skins.txt存在于.minecraft/bin文件夹下
-    以skinme的配置为例
+    以nekocraft的配置为例
 *
 
-        http://sm.skinme.co/get.php?type=skin&file=%s.png
-        http://sm.skinme.co/get.php?type=cloak&file=%s.png
+        http://nekocraft.com/mcskin/?p=%s
+        http://nekocraft.com/mccloak/?p=%s
 
     第一行是皮肤文件的路径 第二行是披风的路径 以%s表示玩家名
     
@@ -60,13 +67,12 @@ mod载入文件说明 (以lite.txt为例)
 如何进服
 ---------------
 + 下载客户端
-+ 前往[minelogin](http://www.minelogin.com/ml)注册验证
-  p.s.你可能会遇到以下两种情况:
-  1. 注册时提示用户名已存在 (换一个用户名)
-  2. 收不到验证邮件 ()
++ 前往[Nekocraft](http://nekocraft.com/)注册
+  1. 注册后会发一封邮件里面有初始密码,登录后修改即可
+  2. 登录后可以上传皮肤和披风.
 + 无论如何请先进一下服务器 否则任何请求不受理
-+ 刚进服默认为游客模式 没有任何权限(包括`/login`) 但是请不要着急退出(退出状态下无法被邀请)
-+ 服务器施行邀请制度 邀请别人的指令为`/w ID` 进服后请联系周围玩家进行邀请(注意非OP玩家每小时可邀请一次)
++ 刚进服默认为游客模式 但是请不要着急退出(退出状态下无法被邀请)
++ 服务器施行邀请制度 邀请别人的指令为`/i ID` 进服后请联系周围玩家进行邀请(注意非OP玩家每小时可邀请一次)
 + 正式加入服务器后请先熟悉相关功能 不要着急出去冒险 出生点的牌子请多看看
 + 游戏时请遵守一些基本的游戏道德和服务器的规定
 

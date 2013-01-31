@@ -122,7 +122,7 @@ return'"'+str+'"';};}(jQuery));
 <script>
 var dragwin_cltx,dragwin_clty,dragwin_draging = false,
 config={user:"",password:"",
-mods:["MySkinConfig.zip","NekoLogin.zip","FML.zip"],
+mods:["MySkinConfig.zip","NekoLogin.zip;ModLoader.zip"],
 extparm:"-Xmx728m"},
 fs= new ActiveXObject("Scripting.FileSystemObject");
 function drag_move(){
@@ -145,33 +145,51 @@ dragwin_draging=false;
 event.srcElement.releaseCapture();
 }
 
+function fil(arr,o){
+  var r=[];
+  for(var i in arr)
+    if(o != arr[i])
+      r.push(arr[i]);
+  return r;
+}
+function have(arr,o){
+  var r=[],
+      cv={};
+  for(var i in arr){cv[arr[i]]=1;}
+  return !!cv[o];
+}
+function addfirst(arr,o){
+  if(!have(arr,o))
+    arr.unshift(o);
+  return arr;
+}
+function addlast(arr,o){
+  if(!have(arr,o))
+    arr.push(o);
+  return arr;
+}
+function undismod(t){try{fs.MoveFile(t+".dis",t);}catch(e){}}
+function dismod(t){try{fs.MoveFile(t,t+".dis");}catch(e){}}
+
 function startgame(player,sesion,extparm){
 var sh = new ActiveXObject("WScript.Shell");
 $(".falist li").each(function(index, o) {
   var d=$(o),
-      cv={};
-  for(var i in config.mods){cv[config.mods[i]]=1;}
-    if(d.text()=="√"){
-      if(d.attr("data-type")=="jar"){
-        if(!cv[d.attr("data-name")])
-          config.mods.unshift(d.attr("data-name"));
-      } else {
-        var t=d.attr("data-type")+d.attr("data-name");
-        try{fs.MoveFile(t+".dis",t);}catch(e){}
-      }
-    } else {
-      if(d.attr("data-type")=="jar"){
-        var temp=[];
-        for(var i in config.mods){
-          if(d.attr("data-name") != config.mods[i])
-            temp.push(config.mods[i]);
-        }
-        config.mods=temp;
-      } else {
-        var t=d.attr("data-type")+d.attr("data-name");
-        try{fs.MoveFile(t,t+".dis");}catch(e){}
-      }
-    }
+      ok=d.text()=="√",
+      ty=d.attr("data-type"),
+      na=d.attr("data-name");
+  if(ty=="jar"){
+    config.mods=(ok?addfirst:fil)(config.mods,na);
+  } if(ty=="jar-sc"){
+    var ar=na.split("|"),
+        ma=ar[0],
+        mb=ar[1];
+    config.mods=fil(config.mods,ok?mb:ma);
+    config.mods=addlast(config.mods,ok?ma:mb);
+  }
+  else {
+    (ok?undismod:dismod)(ty+na);
+  }
 });
 var jar="minecraft.jar",
 str='cmd /c .minecraft\\bin\\launcherproxy.bat '+
@@ -201,7 +219,7 @@ function login(user,pass,cb){
 try{
 var xh= new ActiveXObject("MSXML2.ServerXMLHTTP");
 xh.setOption(2, 13056);
-xh.open("POST", "https://nekocraft.com/mclogin/", 0);
+xh.open("POST", "https://ssl.nekocraft.com/mclogin/", 0);
 xh.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 xh.onreadystatechange=function(){
 if (xh.readyState == 4)
@@ -233,15 +251,19 @@ $("#password").val(config.password);
 $("#extparm").val(config.extparm);
 var l=$('.falist li');
 l.each(function(i, o) {
-var d=$(o),t;
-if((t=d.attr("data-type"))!="jar")
-{
-if(fs.FileExists(t+d.attr("data-name"))){d.text("√");return;};
-}
-d.text("×");
+  var d=$(o),ty=d.attr("data-type"),na=d.attr("data-name");
+  if(ty=="jar") ;
+  else if(ty=="jar-sc"){
+    var ar=na.split("|"),
+        ma=ar[0];
+    if(have(config.mod,ma)){d.text("√");return;}
+  }else {
+    if(fs.FileExists(ty+na)){d.text("√");return;};
+  }
+  d.text("×");
 });
 for(var i in config.mods){
-l.filter('li[data-name="'+config.mods[i]+'"]').text("√");
+  l.filter('li[data-name="'+config.mods[i]+'"]').text("√");
 }
 $(".falist li").each(function(i, d) {
 $(d).css({top:i*29.6});
@@ -268,8 +290,9 @@ return false;
 <body>
 <div class="main">
 <div class="drapbar" onmouseup="drag_up()" onmousemove="drag_move()" onmousedown="drag_down()"></div>
-<form action="https://nekocraft.com/mclogin/" method="POST" id="f">
+<form action="https://ssl.nekocraft.com/mclogin/" method="POST" id="f">
 <ul class="falist">
+<li data-type="jar-sc" data-name="NekoLogin_Forge.zip;FML.zip|NekoLogin.zip;ModLoader.zip">√</li>
 <li data-type=".minecraft/mods/" data-name="ReiMinimapZH.zip">√</li>
 <li data-type="jar" data-name="OptiFine_HD_U.zip">√</li>
 <li data-type="jar" data-name="Font_HKSN_U.zip">√</li>

@@ -1,27 +1,27 @@
 Minimap: Enable
-Render Type: Surface
+Render Type: 地表
 Death Point: Disable
 Auto Update Check: Disable
-Map Shape: Square
+Map Shape: 方形
 Texture: Zan Minimap
-Map Position: Upper Right
-Map Scale: Auto
+Map Position: 右上
+Map Scale: 自动
 Map Opacity: Percent100
-Large Map Scale: Auto
+Large Map Scale: 自动
 Large Map Opacity: Percent100
 Large Map Label: Disable
 Filtering: Enable
-Show Coordinates: Type2
+Show Coordinates: 类型2
 Show Menu Key: Enable
 Font Scale: Normal
 Default Zoom: X1 0
-Mask Type: Depth
-Update Frequency: Middle
-Threading: Disable
-Thread Priority: Low
+Mask Type: 深度
+Update Frequency: 中
+Threading: Enable
+Thread Priority: 低
 Preloaded Chunks: Disable
-Lighting: Dynamic
-Lighting Type: Type1
+Lighting: 动态
+Lighting Type: 类型1
 Terrain Undulate: Enable
 Terrain Depth: Enable
 Transparency: Enable
