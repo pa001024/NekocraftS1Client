@@ -56,6 +56,7 @@ ofRandomMobs:true
 ofSmoothBiomes:true
 ofCustomFonts:true
 ofCustomColors:true
+ofCustomSky:true
 ofShowCapes:true
 ofNaturalTextures:true
 ofLazyChunkLoading:false

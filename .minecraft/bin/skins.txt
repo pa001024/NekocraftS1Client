@@ -1,2 +1,4 @@
-http://nekocraft.com/mcskin/?p=%s
-http://nekocraft.com/mccloak/?p=%s
+http://cdn.nekocraft.com/mc/skin/%s
+http://cdn.nekocraft.com/mc/cloak/%s
+http://ssl.nekocraft.com/mclogin/?type=joinserver&user=%s&session=%s&serverId=%s
+http://ssl.nekocraft.com/mclogin/?type=checkserver&user=%s&serverId=%s

@@ -17,8 +17,11 @@
 /.minecraft/LiteLoader.*
 /.minecraft/mods/macros
 /.minecraft/journeyMap
+/.minecraft/audiotori
+/.minecraft/matmos
 /Launcher.json
 *.1
+*.2
 *.log
 *.lck
 *.7z
@@ -30,3 +33,4 @@ glslshadersof.updatecheck.txt
 Launcher.ini
 /pack.bat
 /run.bat
+debug.*
