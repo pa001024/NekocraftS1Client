@@ -4,7 +4,7 @@
 客户端一服二服通用,进入一服请开启Forge
 
 ----------------------
-__当前版本标记:B4__
+__当前版本标记:B5__
 
 目前进度:
 + 基本功能(原创皮肤MOD)
@@ -17,7 +17,7 @@ __当前版本标记:B4__
 + 原创服务端或更加优化的性能
 + 自动更新
 + 游戏内自定义GUI
-+ Spoutcraft支持可能
++ 类Spoutcraft支持可能
 
 编译:`git archive --format=zip -9 -o pack.zip master` 
 
@@ -33,16 +33,12 @@ mod安装
       "user":"pa001024",
       "password":"******",
       "mods":[
-        "ShadersMod.zip",
-        "LiteLoader.zip",
         "ZHInput.zip",
-        "Font_HKSN_U.zip",
-        "OptiFine_HD_U.zip",
+        "OptiFine_HD_U_ZH.zip;OptiFine_HD_U.zip",
         "MySkinConfig.zip",
-        "NekoLogin.zip",
-        "FML.zip"
+        "ModLoader.zip"
       ],
-      "extparm":"-Xmx2G -Xincgc"
+      "extparm":"-server -Xmx2G -Xincgc"
     }
     
 全部MOD可定制,只需按顺序加入mods中即可( __如无特殊需要一般无需修改,将MOD放入mods文件夹即可__ ).
@@ -54,10 +50,13 @@ mod安装
     以nekocraft的配置为例
 *
 
-        http://nekocraft.com/mcskin/?p=%s
-        http://nekocraft.com/mccloak/?p=%s
+        http://cdn.nekocraft.com/mc/skin/%s
+        http://cdn.nekocraft.com/mc/cloak/%s
+        http://ssl.nekocraft.com/mclogin/?type=joinserver&user=%s&session=%s&serverId=%s
+        http://ssl.nekocraft.com/mclogin/?type=checkserver&user=%s&serverId=%s
 
     第一行是皮肤文件的路径 第二行是披风的路径 以%s表示玩家名
+    第三第四是登录协议地址 请不要改动 否则无法进入服务器
     
 
 -----------------------------------
@@ -89,10 +88,8 @@ mod安装
 + `/home` 回到家
 + `/tpa ID` 传送到名为ID的玩家身边
 + `/tpahere ID` 将名为ID的玩家传送到身边
-+ `/jobs help` 查看关于职业的帮助
 + `/bal` 查看当前剩余的金钱
 + `/t ID MSG`向玩家发送私聊信息
-+ `/scvron``/scvroff` 开启和关闭死亡不掉落物品
 
 
 
