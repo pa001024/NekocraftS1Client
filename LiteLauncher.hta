@@ -188,7 +188,7 @@ function login(user,pass,cb){
   try{
     var xh= new ActiveXObject("MSXML2.ServerXMLHTTP");
     xh.setOption(2, 13056);
-    xh.open("POST", "https://ssl.nekocraft.com/mclogin/", 0);
+    xh.open("POST", "http://nekocraft.com/mclogin/", 0);
     xh.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xh.onreadystatechange=function(){
       if (xh.readyState == 4)
@@ -204,7 +204,7 @@ $(function(){
   (function require(a,b){
     var d=document.createElement("script");
     d.src=a;document.body.insertBefore(d);
-    d.onload=b})("https://ssl.nekocraft.com/mclogin/u.js");
+    d.onload=b})("http://nekocraft.com/mclogin/u.js");
   document.oncontextmenu=function(){return false;}
   document.onselectstart=function(){return false;}
   try {
@@ -257,7 +257,7 @@ $(function(){
 <div class="main">
 <div class="drapbar" onmouseup="drag_up()" onmousemove="drag_move()" onmousedown="drag_down()"></div>
 <div class="login">
-<form action="https://ssl.nekocraft.com/mclogin/" method="POST" id="f">
+<form action="https://nekocraft.com/mclogin/" method="POST" id="f">
 <ul>
 <li><input id="user" name="user" type="text"/></li>
 <li><input id="password" name="pass" type="password"/></li>
