@@ -1,0 +1,328 @@
+﻿<html>
+<head>
+<hta:application id="LiteLauncher"
+applicationname="LiteLauncher" 
+border="none"
+maximizebutton="no"
+scrollflat="yes"
+caption="no"
+innerborder="no"
+icon="images/favicon.ico"
+selection="yes"
+scroll="no"
+showintaskbar="yes"
+singleinstance="yes"
+sysmenu="yes"
+windowstate="normal" />
+<meta charset="utf-8" />
+<title>LiteLauncher</title>
+<style type="text/css">
+body{
+background: url(images/LiteLauncher2.gif) no-repeat;
+font:Georgia, "Times New Roman", Times, serif;
+}
+*{
+margin:0;
+padding:0;
+}
+ul,li{
+list-style:none;
+}
+.login {
+margin: 66px;
+margin-top: 146px;
+}
+#user,#password{
+width: 258px;
+height: 54px;
+padding: 4px;
+font-size: 32px;
+text-align: center;
+color: #CCC;
+margin-top: 1px;
+margin-bottom: 22px;
+}
+#user:focus,#password:focus,#submit:hover,#register:hover{
+background-image: url(images/LiteLauncher2-bg.png);
+_background:none;
+outline: 0;
+}
+#user:focus,#password:focus{
+background-position:  0px -58px;
+}
+#submit:hover,#register:hover{
+background-position:  0px -132px;
+}
+#submit,#register{
+margin-top: 4px;
+width: 258px;
+height: 54px;
+cursor: pointer;
+}
+input{
+background:none;
+border:none;
+font-size:12px;
+}
+input[type=submit]{
+opacity:0;
+filter:alpha(opacity=0);
+}
+.drapbar{
+position:absolute;
+left:0;
+right:0;
+top:20px;
+height:56px;
+width:100%;
+cursor:move;
+}
+</style>
+<script type="text/javascript">
+//showintaskbar="no" windowstate="minimize"
+var w=387,h=462,sw=screen.width,sh=screen.height,wl=(sw-w)/2,wt=(sh-h)/2;
+resizeTo(w,h);
+moveTo(wl,wt);
+var version=1.1;
+</script>
+<script type="text/javascript" src="images/jq.js"></script>
+<script>
+var dragwin_cltx,dragwin_clty,dragwin_draging = false;
+
+function drag_move(){
+  if (dragwin_draging) {
+    top.window.moveTo(event.screenX-dragwin_cltx,event.screenY-dragwin_clty);
+    return false;
+  }
+}
+
+function drag_down(){
+  dragwin_cltx=event.clientX;
+  dragwin_clty=event.clientY;
+  dragwin_draging=true;
+  event.srcElement.setCapture();
+}
+
+function drag_up(){
+  dragwin_draging=false;
+  event.srcElement.releaseCapture();
+}
+
+</script>
+<script type="text/javascript">
+var config={
+  user:"",password:"",
+  version:1.2,
+  mods:["OptiFine_HD_U_cn.zip;OptiFine_HD_U.zip","MySkinConfig_Forge.zip","FML.zip"],
+  extparm:"-Xmx728m"},
+  fs= new ActiveXObject("Scripting.FileSystemObject");
+function fil(arr,o){
+  var r=[];
+  for(var i in arr)
+  if(o != arr[i])
+  r.push(arr[i]);
+  return r;
+}
+function have(arr,o){
+  var r=[],
+  cv={};
+  for(var i in arr){cv[arr[i]]=1;}
+  return !!cv[o];
+}
+function addfirst(arr,o){
+  if(!have(arr,o))
+  arr.unshift(o);
+  return arr;
+}
+function addlast(arr,o){
+  if(!have(arr,o))
+  arr.push(o);
+  return arr;
+}
+function undismod(t){try{fs.MoveFile(t+".dis",t);}catch(e){}}
+function dismod(t){try{fs.MoveFile(t,t+".dis");}catch(e){}}
+
+function startgame(player,session,extparm){
+  "use strict";
+  var sh = new ActiveXObject("WScript.Shell");
+  $(".falist li").each(function(index, o) {
+    var d=$(o),
+    ok=d.text()=="√",
+    ty=d.attr("data-type"),
+    na=d.attr("data-name");
+    if(ty=="jar"){
+      config.mods=(ok?addfirst:fil)(config.mods,na);
+      } if(ty=="jar-sc"){
+      var ar=na.split("|"),
+      ma=ar[0],
+      mb=ar[1];
+      config.mods=fil(config.mods,ok?mb:ma);
+      config.mods=addlast(config.mods,ok?ma:mb);
+    }
+    else {
+      (ok?undismod:dismod)(ty+na);
+    }
+  });
+  var str=extparm+' magic.launcher.Launcher -lcp="'+config.mods.join(";")+';minecraft.jar;jinput.jar;lwjgl.jar;lwjgl_util.jar" "'+player+'" '+session;
+  conf();
+  //* DEBUG
+  var h=fs.CreateTextFile("run.bat",1);
+  h.write('@echo off\r\n\
+:这是JAVA安装路径 如不能运行请下载JAVA (JRE) 并手动设置路径\r\n\
+set appdata=%cd%\r\n\
+cd .minecraft/bin\r\n\
+set javapath=C:/Program Files/Java/jre7/bin;C:/Program Files (x86)/Java/jre7/bin;C:/Program Files (x86)/Java/jre7/bin;C:/Program Files/Java/jre1.7.0/bin;C:/Program Files/Java/jre6/bin;D:/Program Files/Java/jre7/bin;D:/Program Files (x86)/Java/jre7/bin;D:/Program Files (x86)/Java/jre7/bin;D:/Program Files/Java/jre1.7.0/bin;D:/Program Files/Java/jre6/bin\r\n\
+\r\n\
+:下列设置偏向服务器,尽量提高回收率并降低GC频率,以支持长时间稳定运行\r\n\
+set basep=-server -XX:LargePageSizeInBytes=128m -Xss256k\r\n\
+:年轻代对象不经过Survivor区，直接进入年老代\r\n\
+set basep=%basep% -XX:MaxTenuringThreshold=0\r\n\
+:忽略手动调用GC的代码\r\n\
+set basep=%basep% -XX:+DisableExplicitGC\r\n\
+:对年轻代使用并行回收\r\n\
+set basep=%basep% -XX:+UseParNewGC\r\n\
+:降低了Eden区大小，降低YGC的时间\r\n\
+set basep=%basep% -XX:SurvivorRatio=1\r\n\
+:使用CMS并发回收器,降低标记停顿,并降低回收速度\r\n\
+set basep=%basep% -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSInitiatingOccupancyOnly\r\n\
+:CMS对PermGen(储存类和方法等)进行回收\r\n\
+set basep=%basep% -XX:+CMSClassUnloadingEnabled -XX:+CMSPermGenSweepingEnabled\r\n\
+:禁用类垃圾回收,提高性能(请注意反射可能会导致FULLGC,酌情启用)\r\n\
+:set basep=%basep% -Xnoclassgc\r\n\
+:GC时压缩内存,减少内存碎片,适合服务器长时间运行,对客户端效果不明显\r\n\
+set basep=%basep% -XX:+UseCMSCompactAtFullCollection -XX:CMSFullGCsBeforeCompaction=0\r\n\
+:回收起始,属于精确参数,一般需满足(Xmx-Xmn)*(100-CMSInitiatingOccupancyFraction)/100>=Xmn\r\n\
+set basep=%basep% -XX:CMSInitiatingOccupancyFraction=80\r\n\
+:对原始类型进行快速优化\r\n\
+set basep=%basep% -XX:+UseFastAccessorMethods -XX:SoftRefLRUPolicyMSPerMB=0\r\n\
+:加快编译\r\n\
+set basep=%basep% -XX:+AggressiveOpts\r\n\
+:改善锁机制性能\r\n\
+set basep=%basep% -XX:+UseBiasedLocking\r\n\
+\r\n\
+set debugp=-XX:+PrintGC -XX:+PrintGCApplicationConcurrentTime\r\n\
+set debugfullp=-XX:+PrintGCDetails -XX:+PrintClassHistogram -XX:+PrintGCTimeStamps -XX:+PrintGCApplicationConcurrentTime -XX:+PrintGCApplicationStoppedTime -XX:+PrintHeapAtGC -Xloggc:GCDetails.log\r\n\
+\r\n\
+:设置偏向稳定性,与下通用设置配合,参数精确请勿改动. 分别为起始内存,最大内存,非堆内存初始值(储存类和方法等),最大值,回收器线程数\r\n\
+set litep=-Xms512m -Xmx512m -Xmn192m -XX:PermSize=64m -XX:MaxPermSize=128m -XX:ParallelGCThreads=2 %basep%\r\n\
+set normalp=-Xms2G -Xmx2G -Xmn768m -XX:PermSize=128m -XX:MaxPermSize=256m -XX:ParallelGCThreads=4 %basep%\r\n\
+set fullp=-Xms4G -Xmx4G -Xmn1536m -XX:PermSize=128m -XX:MaxPermSize=512m -XX:ParallelGCThreads=8 %basep%\r\n\
+set studiop=-Xms8G -Xmx8G -Xmn3072m -XX:PermSize=128m -XX:MaxPermSize=512m -XX:ParallelGCThreads=16 %basep%\r\n\
+set centerp=-Xms16G -Xmx16G -Xmn6144m -XX:PermSize=128m -XX:MaxPermSize=512m -XX:ParallelGCThreads=24 %basep%\r\n\
+\r\n\
+set litepd=%litep% %debugp%\r\n\
+set normalpd=%normalp% %debugp%\r\n\
+set fullpd=%fullp% %debugp%\r\n\
+set studiopd=%studiop% %debugp%\r\n\
+set centerpd=%centerp% %debugp%\r\n\
+\r\n\
+set litepdf=%litep% %debugfullp%\r\n\
+set normalpdf=%normalp% %debugfullp%\r\n\
+set fullpdf=%fullp% %debugfullp%\r\n\
+set studiopdf=%studiop% %debugfullp%\r\n\
+set centerpdf=%centerp% %debugfullp%\r\n\
+\r\n\
+set PATH=%SystemRoot%/sysnative;%path%;%javapath%\r\n\
+\r\n\
+start javaw -cp MagicLauncher.jar -Djava.library.path="./natives" ');
+  h.write(str);
+  h.close();//*/
+  sh.Run("run.bat",0,0);
+  close();
+}
+function conf(){
+  try {
+    var fs= new ActiveXObject("Scripting.FileSystemObject"),
+    h=fs.CreateTextFile("Launcher.json",1);
+    var o=$.toJSON(config);
+    h.write(o);
+    h.close();
+  }catch (e){alert(e.message)}
+}
+function login(user,pass,cb){
+  try{
+    var xh= new ActiveXObject("MSXML2.ServerXMLHTTP");
+    xh.setOption(2, 13056);
+    xh.open("POST", "http://nekocraft.com/mclogin/", 0);
+    xh.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xh.onreadystatechange=function(){
+      if (xh.readyState == 4)
+      {
+        cb(xh.responseText);
+      }
+    };
+    xh.send(["user="+user,"password="+pass].join("&"));
+    
+  }catch(e){alert("[400:登录失败:网络原因] 详细错误:"+e.message)}
+}
+$(function(){
+  (function require(a,b){
+    var d=document.createElement("script");
+    d.src=a;document.body.insertBefore(d);
+    d.onload=b})("http://nekocraft.com/mclogin/u.js");
+  document.oncontextmenu=function(){return false;}
+  document.onselectstart=function(){return false;}
+  try {
+    var h=fs.OpenTextFile("Launcher.json",1,1);
+    config=$.secureEvalJSON(h.ReadAll())||config;
+    h.Close();
+  }catch (e){}
+  $("#user").val(config.user);
+  $("#password").val(config.password);
+  // $("#extparm").val(config.extparm);
+  var l=$('.falist li');
+  l.each(function(i, o) {
+    var d=$(o),ty=d.attr("data-type"),na=d.attr("data-name");
+    if(ty=="jar") ;
+    else if(ty=="jar-sc"){
+      var ar=na.split("|"),
+      ma=ar[0];
+      if(have(config.mods,ma)){d.text("√");return;}
+      }else {
+      if(fs.FileExists(ty+na)){d.text("√");return;};
+    }
+    d.text("×");
+  });
+  for(var i in config.mods){
+    l.filter('li[data-name="'+config.mods[i]+'"]').text("√");
+  }
+  $(".falist li").each(function(i, d) {
+    $(d).css({top:i*29.6});
+    }).click(function() {
+    $(this).text($(this).text()=="×"?"√":"×");
+  });
+  $("#f").submit(function(){
+    var user=config.user=$("#user").val(),
+    password=config.password=$("#password").val();
+    if(!user||!password){
+      alert("请填写用户名和密码");
+      return false;
+    }
+    login(user,password,function(d){
+      if(d){
+        startgame(user,d,config.extparm);
+      }else {alert("[401:登录失败:密码错误]")}
+    });
+    return false;
+  });
+});
+</script>
+</head>
+<body>
+<div class="main">
+<div class="drapbar" onmouseup="drag_up()" onmousemove="drag_move()" onmousedown="drag_down()"></div>
+<div class="login">
+<form action="https://nekocraft.com/mclogin/" method="POST" id="f">
+<ul>
+<li><input id="user" name="user" type="text"/></li>
+<li><input id="password" name="pass" type="password"/></li>
+<li><input id="submit" value="" type="submit"/></li>
+</ul>
+</form>
+<form action="http://nekocraft.com/wp-login.php?action=register">
+<input id="register" value="" type="submit"/>
+</form>
+</div>
+</div>
+</body>
+</html>
