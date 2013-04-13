@@ -37,3 +37,10 @@ Launcher.ini
 /pack.bat
 /run.bat
 debug.*
+/.minecraft/default_reference.xml
+
+/.minecraft/options.txt
+/.minecraft/optionsof.txt
+/.minecraft/optionsshaders.txt
+
+/.minecraft/cache

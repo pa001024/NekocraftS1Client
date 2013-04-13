@@ -113,7 +113,7 @@ function drag_up(){
 var config={
   user:"",password:"",
   version:1.2,
-  mods:["OptiFine_HD_U_cn.zip;OptiFine_HD_U.zip","MySkinConfig_Forge.zip","FML.zip"],
+  mods:["spoutcraft.jar"],
   extparm:"-Xmx728m"},
   fs= new ActiveXObject("Scripting.FileSystemObject");
 function fil(arr,o){
@@ -163,7 +163,7 @@ function startgame(player,session,extparm){
       (ok?undismod:dismod)(ty+na);
     }
   });
-  var str=extparm+' magic.launcher.Launcher -lcp="'+config.mods.join(";")+';minecraft.jar;jinput.jar;lwjgl.jar;lwjgl_util.jar" "'+player+'" '+session;
+  var str=extparm+' magic.launcher.Launcher -lcp="'+config.mods.join(";")+';minecraft.jar" "'+player+'" '+session;
   conf();
   //* DEBUG
   var h=fs.CreateTextFile("run.bat",1);
@@ -224,7 +224,7 @@ set centerpdf=%centerp% %debugfullp%\r\n\
 \r\n\
 set PATH=%SystemRoot%/sysnative;%path%;%javapath%\r\n\
 \r\n\
-start javaw -cp MagicLauncher.jar -Djava.library.path="./natives" ');
+start javaw -cp MagicLauncher.jar;lib/guava-13.0.1.jar;lib/jmdns-3.4.1.jar;lib/slick-274.jar;lib/snakeyaml-1.11.jar;lib/trove4j-3.0.3.jar;lib/codecjlayermp3-r2.jar;lib/codecjorbis-r0.jar;lib/commons-io-2.4.jar;lib/commons-lang3-3.1.jar;lib/dnsjava-2.1.1.jar;jinput.jar;lwjgl.jar;lwjgl_util.jar -Djava.library.path="./natives" ');
   h.write(str);
   h.close();//*/
   sh.Run("run.bat",0,0);
