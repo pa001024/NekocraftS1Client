@@ -6,7 +6,6 @@
 /.minecraft/texturepacks-mp-cache
 /.minecraft/resources
 /.minecraft/saves
-/.minecraft/lib
 /.minecraft/magic
 /.minecraft/mods/World*
 /.minecraft/config
@@ -37,3 +36,5 @@ Launcher.ini
 /pack.bat
 /run.bat
 debug.*
+/.minecraft/cache
+/.minecraft/screenshots
