@@ -2,10 +2,10 @@
 /Media Cache
 /otherversion
 /.minecraft/stats
+/.minecraft/backups
 /.minecraft/texturepacks-mp-cache
 /.minecraft/resources
 /.minecraft/saves
-/.minecraft/lib
 /.minecraft/magic
 /.minecraft/mods/World*
 /.minecraft/config
@@ -20,6 +20,8 @@
 /.minecraft/audiotori
 /.minecraft/matmos
 /Launcher.json
+/git
+/update.bat
 *.1
 *.2
 *.log
@@ -34,3 +36,5 @@ Launcher.ini
 /pack.bat
 /run.bat
 debug.*
+/.minecraft/cache
+/.minecraft/screenshots
