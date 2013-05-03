@@ -38,3 +38,11 @@ Launcher.ini
 debug.*
 /.minecraft/cache
 /.minecraft/screenshots
+
+/.minecraft/bin/cache
+
+/.minecraft/bin/temp_0
+
+/.minecraft/assets
+/.minecraft/temp
+/.minecraft/bin/lib
