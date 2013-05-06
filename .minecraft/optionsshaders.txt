@@ -1,5 +1,5 @@
-#Tue Apr 23 17:46:17 CST 2013
-dtweak=true
+#Mon May 06 19:46:02 CST 2013
+dtweak=false
 handDepthMul=0.125
 cloudShadow=true
 shaderPack=SEUSv10RC7.zip
