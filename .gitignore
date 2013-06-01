@@ -9,7 +9,6 @@
 /.minecraft/lib
 /.minecraft/magic
 /.minecraft/mods/World*
-/.minecraft/config
 /.minecraft/LiteLoader.*
 /.minecraft/ModLoader.*
 /.minecraft/crash-reports
@@ -39,8 +38,9 @@ Launcher.ini
 debug.*
 /.minecraft/default_reference.xml
 
-/.minecraft/options.txt
-/.minecraft/optionsof.txt
-/.minecraft/optionsshaders.txt
-
 /.minecraft/cache
+/.minecraft/screenshots
+/.minecraft/config/mod_ReiMinimap.cfg
+/.minecraft/config/ModLoader.cfg
+/minecraft.1.5.2.jar
+/.minecraft/config/heightmap

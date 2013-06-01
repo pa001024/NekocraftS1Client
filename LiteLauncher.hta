@@ -112,8 +112,8 @@ function drag_up(){
 <script type="text/javascript">
 var config={
   user:"",password:"",
-  version:1.2,
-  mods:["spoutcraft.jar"],
+  version:1.21,
+  mods:["spoutcraft.jar","Font_HKSN.zip","usermod.zip"],
   extparm:"-Xmx728m"},
   fs= new ActiveXObject("Scripting.FileSystemObject");
 function fil(arr,o){
@@ -243,7 +243,7 @@ function login(user,pass,cb){
   try{
     var xh= new ActiveXObject("MSXML2.ServerXMLHTTP");
     xh.setOption(2, 13056);
-    xh.open("POST", "http://nekocraft.com/mclogin/", 0);
+    xh.open("POST", "https://nekocraft.com/api/login/", 0);
     xh.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xh.onreadystatechange=function(){
       if (xh.readyState == 4)
@@ -256,10 +256,10 @@ function login(user,pass,cb){
   }catch(e){alert("[400:登录失败:网络原因] 详细错误:"+e.message)}
 }
 $(function(){
-  (function require(a,b){
-    var d=document.createElement("script");
-    d.src=a;document.body.insertBefore(d);
-    d.onload=b})("http://nekocraft.com/mclogin/u.js");
+  // (function require(a,b){
+  //   var d=document.createElement("script");
+  //   d.src=a;document.body.insertBefore(d);
+  //   d.onload=b})("http://nekocraft.com/mclogin/u.js");
   document.oncontextmenu=function(){return false;}
   document.onselectstart=function(){return false;}
   try {
@@ -312,7 +312,7 @@ $(function(){
 <div class="main">
 <div class="drapbar" onmouseup="drag_up()" onmousemove="drag_move()" onmousedown="drag_down()"></div>
 <div class="login">
-<form action="https://nekocraft.com/mclogin/" method="POST" id="f">
+<form action="https://nekocraft.com/api/login/" method="POST" id="f">
 <ul>
 <li><input id="user" name="user" type="text"/></li>
 <li><input id="password" name="pass" type="password"/></li>

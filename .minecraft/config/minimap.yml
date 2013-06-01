@@ -1,0 +1,20 @@
+blockedEntities: []
+minimap:
+    lightmap: false
+    scale: false
+    yAdjust: 0.0
+    visible: false
+    deathpoints: true
+    firstrun: true
+    zoom: 1
+    directions: true
+    scanRadius: 3
+    coords: true
+    color: true
+    background: true
+    xAdjust: 0.0
+    sizeAdjust: 1.0
+    showEntities: true
+    heightmap: true
+    cavemap: false
+    square: false

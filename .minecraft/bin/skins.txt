@@ -1,4 +1,0 @@
-http://nekocraft.com/mc/skin/%s
-http://nekocraft.com/mc/cloak/%s
-http://nekocraft.com/mclogin/?type=joinserver&user=%s&session=%s&serverId=%s
-http://nekocraft.com/mclogin/?type=checkserver&user=%s&serverId=%s
