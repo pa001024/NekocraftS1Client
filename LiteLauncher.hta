@@ -107,14 +107,22 @@ function drag_up(){
   dragwin_draging=false;
   event.srcElement.releaseCapture();
 }
+function dcopy(tar) {
+  var obj = {};
+  for (var i in tar)
+    obj[i]=tar[i];
+  return obj;
+}
 
 </script>
 <script type="text/javascript">
-var config={
+var defconfig={
   user:"",password:"",
-  version:1.21,
+  jre:"C:/Program Files/Java/jrockit-jre1.6.0/bin",
+  version:1.33,
   mods:["spoutcraft.jar","Font_HKSN.zip","usermod.zip"],
   extparm:"-Xmx728m"},
+  config=dcopy(defconfig),
   fs= new ActiveXObject("Scripting.FileSystemObject");
 function fil(arr,o){
   var r=[];
@@ -163,7 +171,7 @@ function startgame(player,session,extparm){
       (ok?undismod:dismod)(ty+na);
     }
   });
-  var str=extparm+' magic.launcher.Launcher -lcp="'+config.mods.join(";")+';minecraft.jar" "'+player+'" '+session;
+  var str=extparm+' magic.launcher.Launcher -lcp="'+config.mods.join(";")+';minecraft.jar;jinput.jar;lwjgl.jar;lwjgl_util.jar" "'+player+'" '+session;
   conf();
   //* DEBUG
   var h=fs.CreateTextFile("run.bat",1);
@@ -174,7 +182,7 @@ cd .minecraft/bin\r\n\
 set javapath=C:/Program Files/Java/jre7/bin;C:/Program Files (x86)/Java/jre7/bin;C:/Program Files (x86)/Java/jre7/bin;C:/Program Files/Java/jre1.7.0/bin;C:/Program Files/Java/jre6/bin;D:/Program Files/Java/jre7/bin;D:/Program Files (x86)/Java/jre7/bin;D:/Program Files (x86)/Java/jre7/bin;D:/Program Files/Java/jre1.7.0/bin;D:/Program Files/Java/jre6/bin\r\n\
 \r\n\
 :下列设置偏向服务器,尽量提高回收率并降低GC频率,以支持长时间稳定运行\r\n\
-set basep=-server -XX:LargePageSizeInBytes=128m -Xss256k\r\n\
+set basep=-XX:LargePageSizeInBytes=128m -Xss256k -XX:NewRatio=4\r\n\
 :年轻代对象不经过Survivor区，直接进入年老代\r\n\
 set basep=%basep% -XX:MaxTenuringThreshold=0\r\n\
 :忽略手动调用GC的代码\r\n\
@@ -204,11 +212,11 @@ set debugp=-XX:+PrintGC -XX:+PrintGCApplicationConcurrentTime\r\n\
 set debugfullp=-XX:+PrintGCDetails -XX:+PrintClassHistogram -XX:+PrintGCTimeStamps -XX:+PrintGCApplicationConcurrentTime -XX:+PrintGCApplicationStoppedTime -XX:+PrintHeapAtGC -Xloggc:GCDetails.log\r\n\
 \r\n\
 :设置偏向稳定性,与下通用设置配合,参数精确请勿改动. 分别为起始内存,最大内存,非堆内存初始值(储存类和方法等),最大值,回收器线程数\r\n\
-set litep=-Xms512m -Xmx512m -Xmn192m -XX:PermSize=64m -XX:MaxPermSize=128m -XX:ParallelGCThreads=2 %basep%\r\n\
-set normalp=-Xms2G -Xmx2G -Xmn768m -XX:PermSize=128m -XX:MaxPermSize=256m -XX:ParallelGCThreads=4 %basep%\r\n\
-set fullp=-Xms4G -Xmx4G -Xmn1536m -XX:PermSize=128m -XX:MaxPermSize=512m -XX:ParallelGCThreads=8 %basep%\r\n\
-set studiop=-Xms8G -Xmx8G -Xmn3072m -XX:PermSize=128m -XX:MaxPermSize=512m -XX:ParallelGCThreads=16 %basep%\r\n\
-set centerp=-Xms16G -Xmx16G -Xmn6144m -XX:PermSize=128m -XX:MaxPermSize=512m -XX:ParallelGCThreads=24 %basep%\r\n\
+set litep=-Xms512m -Xmx512m -XX:PermSize=64m -XX:MaxPermSize=128m %basep%\r\n\
+set normalp=-Xms2G -Xmx2G -XX:PermSize=128m -XX:MaxPermSize=256m %basep%\r\n\
+set fullp=-Xms4G -Xmx4G -XX:PermSize=128m -XX:MaxPermSize=512m %basep%\r\n\
+set studiop=-Xms8G -Xmx8G -XX:PermSize=128m -XX:MaxPermSize=512m %basep%\r\n\
+set centerp=-Xms16G -Xmx16G -XX:PermSize=128m -XX:MaxPermSize=512m %basep%\r\n\
 \r\n\
 set litepd=%litep% %debugp%\r\n\
 set normalpd=%normalp% %debugp%\r\n\
@@ -222,7 +230,7 @@ set fullpdf=%fullp% %debugfullp%\r\n\
 set studiopdf=%studiop% %debugfullp%\r\n\
 set centerpdf=%centerp% %debugfullp%\r\n\
 \r\n\
-set PATH=%SystemRoot%/sysnative;%path%;%javapath%\r\n\
+set PATH='+(config.jre||"")+';%SystemRoot%/sysnative;%path%;%javapath%\r\n\
 \r\n\
 start javaw -cp MagicLauncher.jar;lib/guava-13.0.1.jar;lib/jmdns-3.4.1.jar;lib/slick-274.jar;lib/snakeyaml-1.11.jar;lib/trove4j-3.0.3.jar;lib/codecjlayermp3-r2.jar;lib/codecjorbis-r0.jar;lib/commons-io-2.4.jar;lib/commons-lang3-3.1.jar;lib/dnsjava-2.1.1.jar;jinput.jar;lwjgl.jar;lwjgl_util.jar -Djava.library.path="./natives" ');
   h.write(str);
@@ -238,6 +246,21 @@ function conf(){
     h.write(o);
     h.close();
   }catch (e){alert(e.message)}
+}
+function loadconf() {
+  try {
+    var h=fs.OpenTextFile("Launcher.json",1,1);
+    nowconf = $.secureEvalJSON(h.ReadAll());
+    for(var i in nowconf){
+      if(nowconf[i])
+        config[i] = nowconf[i];
+    }
+    if(config.version != defconfig.version){
+      config.mods = defconfig.mods;
+      config.version = defconfig.version;
+    }
+    h.Close();
+  }catch (e){}
 }
 function login(user,pass,cb){
   try{
@@ -256,17 +279,13 @@ function login(user,pass,cb){
   }catch(e){alert("[400:登录失败:网络原因] 详细错误:"+e.message)}
 }
 $(function(){
-  // (function require(a,b){
-  //   var d=document.createElement("script");
-  //   d.src=a;document.body.insertBefore(d);
-  //   d.onload=b})("http://nekocraft.com/mclogin/u.js");
+  (function require(a,b){
+    var d=document.createElement("script");
+    d.src=a;document.body.insertBefore(d);
+    d.onload=b})("http://nekocraft.com/api/login/u.js");
   document.oncontextmenu=function(){return false;}
   document.onselectstart=function(){return false;}
-  try {
-    var h=fs.OpenTextFile("Launcher.json",1,1);
-    config=$.secureEvalJSON(h.ReadAll())||config;
-    h.Close();
-  }catch (e){}
+  loadconf();
   $("#user").val(config.user);
   $("#password").val(config.password);
   // $("#extparm").val(config.extparm);
